@@ -138,16 +138,16 @@ public class DataAnalysis {
 		System.out.println("자치구, 거래년도, 거래월을 기준으로 한 평균매매가를 계산중입니다.");
 		for(int i = 0; i < dataList.size(); i++) {
 			for(int j = 0; j < simpleList.size(); j++) {
-				if(dataList.get(i).getBorough().equals(simpleList.get(j).borough) && dataList.get(i).getContractYear().equals(simpleList.get(j).contractYear) && dataList.get(i).getContractMonth().equals(simpleList.get(j).contractMonth)) {
-					simpleList.get(j).totalsum = simpleList.get(j).totalsum + dataList.get(i).getUnitAmount();
-					simpleList.get(j).count = simpleList.get(j).count+1;
+				if(dataList.get(i).getBorough().equals(simpleList.get(j).getBorough()) && dataList.get(i).getContractYear().equals(simpleList.get(j).getContractYear()) && dataList.get(i).getContractMonth().equals(simpleList.get(j).getContractMonth())) {
+					simpleList.get(j).setTotalsum(simpleList.get(j).getTotalsum() + dataList.get(i).getUnitAmount());
+					simpleList.get(j).setCount(simpleList.get(j).getCount()+1);
 				}
 			}
 		}
 		
 		//평균금액을 계산하여 simpleList에 저장함.
 		for(int i = 0; i < simpleList.size(); i++) {
-			simpleList.get(i).avg = simpleList.get(i).totalsum / simpleList.get(i).count;
+			simpleList.get(i).setAvg(simpleList.get(i).getTotalsum() / simpleList.get(i).getCount());
 		}
 		System.out.println("자치구, 거래년도, 거래월을 기준으로 한 평균매매가를 모두 저장하였습니다.");
 		
@@ -168,13 +168,13 @@ public class DataAnalysis {
 		for(int i = 0; i < simpleList.size(); i++) { //simpleList의 크기만큼 루프
 			//거래월에 "월"을 붙여주는 부분.
 			String month = ""; 
-			if(simpleList.get(i).contractMonth.charAt(0)=='0') {
-				month = simpleList.get(i).contractMonth.charAt(1) + "월";
+			if(simpleList.get(i).getContractMonth().charAt(0)=='0') {
+				month = simpleList.get(i).getContractMonth().charAt(1) + "월";
 			}else
-				month = simpleList.get(i).contractMonth + "월";
+				month = simpleList.get(i).getContractMonth() + "월";
 			
 			//자치구, 거래년도, 거래월, 평균금액을 문자열에 담음.
-			resultLine = simpleList.get(i).borough+","+simpleList.get(i).contractYear+","+month+",\""+df.format((int)(simpleList.get(i).avg))+"\"\n";
+			resultLine = simpleList.get(i).getBorough()+","+simpleList.get(i).getContractYear()+","+month+",\""+df.format((int)(simpleList.get(i).getAvg()))+"\"\n";
 			bw.write(resultLine); //문자열 버퍼에 write
 		}
 		bw.flush(); // 버퍼를 flush함.
