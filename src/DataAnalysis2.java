@@ -172,18 +172,14 @@ public class DataAnalysis2 {
 				"C:\\Users\\user\\eclipse-workspace\\BirthMarriageProject\\csvFile\\서울시 아파트 전세가 데이터(2017_2021).csv",
 				true); // FileWriter객체 생성후 파일지정하여 인스턴스 연결
 		BufferedWriter bw = new BufferedWriter(fw); // BufferedWriter객체 생성 후 인스턴스 연결
-		String header = "자치구, 계약일자(년),계약일자(월),단위면적(㎡)당 전세가(만원)\n"; // 파일 header부분에 사용할 문자열
+		String header = "자치구,계약일자,단위면적(㎡)당 전세가(만원)\n"; // 파일 header부분에 사용할 문자열
 		bw.write(header); // header부분 버퍼에 write
 		String resultLine = ""; // 각 Line에 들어갈 내용을 담는 문자열
 
 		for (int i = 0; i < simpleList.size(); i++) { // simpleList의 크기만큼 루프
-			// 거래월에 "월"을 붙여주는 부분.
-			String month = "";
-			month = simpleList.get(i).getContractMonth() + "월";
-
 			// 자치구, 거래년도, 거래월, 평균금액을 문자열에 담음.
-			resultLine = simpleList.get(i).getBorough() + "," + simpleList.get(i).getContractYear() + "," + month
-					+ ",\"" + (int)(simpleList.get(i).getAvg()) + "\"\n";
+			resultLine = simpleList.get(i).getBorough() + "," + simpleList.get(i).getContractYear() + "-" + simpleList.get(i).getContractMonth()
+					+ "," + (int)(simpleList.get(i).getAvg()) + "\n";
 			bw.write(resultLine); // 문자열 버퍼에 write
 		}
 		bw.flush(); // 버퍼를 flush함.
