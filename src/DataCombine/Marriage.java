@@ -27,6 +27,12 @@ public class Marriage {
 				tmp = str[0];
 				str[0] = str[1];
 				str[1] = tmp;
+				
+				//1~9월 앞에 0 붙이기
+				if(str[2].length()==2) {
+					str[2] = "0"+str[2];
+				}
+				
 				String change = "";
 				for (int i = 0; i < str.length; i++) {
 					if(i==str.length-1) {

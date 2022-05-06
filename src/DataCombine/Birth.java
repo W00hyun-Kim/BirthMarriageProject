@@ -27,6 +27,12 @@ public class Birth {
 				tmp = str[0];
 				str[0] = str[1];
 				str[1] = tmp;
+				
+				//1~9월 앞에 0 붙이기
+				if(str[2].length()==2) {
+					str[2] = "0"+str[2];
+				}
+				
 				String change = "";
 				for (int i = 0; i < str.length; i++) {
 					if(i==str.length-1) {
@@ -38,6 +44,7 @@ public class Birth {
 				list.add(change);
 			}
 			
+			//sorting
 			Collections.sort(list);
 			
 			for (int i = 0; i < list.size(); i++) {
@@ -51,6 +58,8 @@ public class Birth {
 			e.printStackTrace();
 		}
 		
+		
+		//형식 맞춘거 다시 저장하기
 		File csv = new File("C:\\Users\\whKim\\Desktop\\PythonProject\\Seoul-Apt\\data\\플젝\\(형식맞춘)서울시 출생 데이터(2017~2021).csv");
         BufferedWriter bw = null; 
 		try {
