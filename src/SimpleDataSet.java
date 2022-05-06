@@ -5,7 +5,7 @@ public class SimpleDataSet {
 	private String borough; //자치구
 	private String contractYear; //계약년
 	private String contractMonth ; // 계약월
-	private double totalsum; // 단위면적당 매매액 합계
+	private double totalsum; // 단위면적당 금액 합계
 	private int count; // 개수
 	private double avg; // 평균
 

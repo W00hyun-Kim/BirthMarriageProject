@@ -5,11 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 
 public class DataAnalysis {
@@ -21,18 +19,16 @@ public class DataAnalysis {
 		 * 변수 선언부
 		 */
 		ArrayList<DataSet> dataList = new ArrayList<>(); //csv파일에서 읽어온 데이터를 저장하는 ArrayList
-		DecimalFormat df = new DecimalFormat("###,###,###,###"); //숫자 표현 형식 지정
 		HashSet<String> BoroughSet = new HashSet<>(); //자치구를 중복없이 담을 HashSet
 		HashSet<String> ContractYearSet = new HashSet<>(); //계약년도를 중복없이 담을 HashSet
 		HashSet<String> ContractMonthSet = new HashSet<>(); //계약월을 중복없이 담을 HashSet
 		ArrayList<SimpleDataSet> simpleList = new ArrayList<>(); //파일 쓰기에 사용할 요약본을 저장하는 ArrayList
 
-		File fileDir = new File("C:\\Users\\snrm1\\eclipse-workspace\\BirthMarriageProject\\csvFile"); // csv파일이 있는 폴더를 지정
-		File[] files = fileDir.listFiles(); // 폴더 내의 파일리스트를 배열로 받음.
+		File file = new File("C:\\Users\\user\\eclipse-workspace\\BirthMarriageProject\\csvFile\\아파트 매매가 (2017~2021).csv");
 		BufferedReader reader = null; // BufferedReader 객체 생성
 		
 		try {
-			reader = new BufferedReader(new FileReader(files[0])); //객체에 인스턴스 연결
+			reader = new BufferedReader(new FileReader(file)); //객체에 인스턴스 연결
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("폴더내에 파일이 존재하지 않습니다.");
@@ -51,7 +47,7 @@ public class DataAnalysis {
 		/*
 		 * 파일에서 데이터를 읽어와서 ArrayList에 저장하는 부분
 		*/
-		System.out.println("csv파일을 읽어오고 있습니다. 파일명:(" + files[0].getName() + ")");  //읽어올 파일명을 출력함.
+		System.out.println("csv파일을 읽어오고 있습니다. 파일명:(" + file.getName() + ")");  //읽어올 파일명을 출력함.
 		while ((line = reader.readLine()) != null) {  //읽어올 Line이 없을 때까지 루프
 			if (lineCounter != 0) { //header가 있는 첫줄을 제외하고 ..
 
@@ -159,7 +155,7 @@ public class DataAnalysis {
 		
 		
 		System.out.println("파일에 simpleList의 정보를 받아 저장중입니다.");
-		FileWriter fw = new FileWriter("C:\\Users\\snrm1\\eclipse-workspace\\BirthMarriageProject\\csvFile\\서울시 아파트 매매가 데이터(2017_2021).csv", true); // FileWriter객체 생성후 파일지정하여 인스턴스 연결
+		FileWriter fw = new FileWriter("C:\\Users\\user\\eclipse-workspace\\BirthMarriageProject\\csvFile\\서울시 아파트 매매가 데이터(2017_2021).csv", true); // FileWriter객체 생성후 파일지정하여 인스턴스 연결
 		BufferedWriter bw = new BufferedWriter(fw); //BufferedWriter객체 생성 후 인스턴스 연결
 		String header = "자치구, 매매일자(년),매매일자(월),단위면적(㎡)당 매매가(만원)\n"; //파일 header부분에 사용할 문자열
 		bw.write(header); //header부분 버퍼에 write
@@ -168,13 +164,10 @@ public class DataAnalysis {
 		for(int i = 0; i < simpleList.size(); i++) { //simpleList의 크기만큼 루프
 			//거래월에 "월"을 붙여주는 부분.
 			String month = ""; 
-			if(simpleList.get(i).getContractMonth().charAt(0)=='0') {
-				month = simpleList.get(i).getContractMonth().charAt(1) + "월";
-			}else
-				month = simpleList.get(i).getContractMonth() + "월";
+			month = simpleList.get(i).getContractMonth() + "월";
 			
 			//자치구, 거래년도, 거래월, 평균금액을 문자열에 담음.
-			resultLine = simpleList.get(i).getBorough()+","+simpleList.get(i).getContractYear()+","+month+",\""+df.format((int)(simpleList.get(i).getAvg()))+"\"\n";
+			resultLine = simpleList.get(i).getBorough()+","+simpleList.get(i).getContractYear()+","+month+","+(int)(simpleList.get(i).getAvg())+"\n";
 			bw.write(resultLine); //문자열 버퍼에 write
 		}
 		bw.flush(); // 버퍼를 flush함.
